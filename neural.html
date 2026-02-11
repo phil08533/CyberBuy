@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+function showTerms() {
+  fetch('terms.txt') // make sure terms.txt is in the same folder
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('termsText').textContent = data;
+      document.getElementById('termsModal').style.display = 'block';
+    })
+    .catch(err => console.error('Failed to load terms.txt:', err));
+}
+
+function closeTerms() {
+  document.getElementById('termsModal').style.display = 'none';
+}
+
+
+function showEmailPopup() {
+  document.getElementById('emailPopup').style.display = 'block';
+}
+
+function closeEmailPopup() {
+  document.getElementById('emailPopup').style.display = 'none';
+}
+</script>
+
+<head>
+  <title>CyberBuy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header  style="text-align: center; color:#00ff00; font-family:'VT323', monospace; margin-top:10px; ">
+<hr class="crt">
+<pre >
+                                                                                
+                      ,,                                                        
+  .g8"""bgd          *MM                       `7MM"""Yp,                       
+.dP'     `M           MM                         MM    Yb                       
+dM'       ``7M'   `MF'MM,dMMb.   .gP"Ya `7Mb,od8 MM    dP `7MM  `7MM `7M'   `MF'
+MM           VA   ,V  MM    `Mb ,M'   Yb  MM' "' MM"""bg.   MM    MM   VA   ,V  
+MM.           VA ,V   MM     M8 8M""""""  MM     MM    `Y   MM    MM    VA ,V   
+`Mb.     ,'    VVV    MM.   ,M9 YM.    ,  MM     MM    ,9   MM    MM     VVV    
+  `"bmmmd'     ,V     P^YbmdP'   `Mbmmd'.JMML. .JMMmmmd9    `Mbod"YML.   ,V     
+              ,V                                                        ,V      
+           OOb"                                                      OOb"          
+                                                                           
+</pre>
+<p style="margin:5px 0 0 0; color:#00ff00;">Next-Generation Human Augmentation Technology</p>
+</header>
+<hr class="crt">
+
+
+<!-- Terms Popup -->
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <pre id="termsText"></pre>
+    <p style="color:#00ff00; cursor:pointer;" onclick="closeTerms();">
+      &lt; AGREE
+    </p>
+  </div>
+</div>
+
+<nav style = "text-align: center;">
+    <a href="home.html";>Home</a>
+    <a href="neural.html"; style = "color:rgb(120, 216, 133) ; text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;">Neural</a>
+    <a href="visual.html";>Visual</a>
+    <a href="bodymod.html";>Body Modification</a>
+    <hr class="crt">
+</nav>
+
+<section id="neural">
+  <h2 style = "text-align: center;">Neural Augmentation</h2>
+
+<div class="product">
+  <h3>Neural Dream Enhancer NX-77 </h3>
+  <p>Unlock vivid, controllable dreams with the NX-77. Customize your subconscious experiences, from lucid adventure to deep relaxation. Side effects may include random memory fragments, faint whispers, and fleeting déjà vu. Users report strange synchronicities when worn for extended periods.</p>
+  <p class="price">Retailing at $83,799</p>
+  <div style="text-align: center;">
+  <img src="pictures/nx77.png"  width="100">   <img src="pictures/nx77inuse.png"  width="100">
+  <br>
+  <button onclick="showEmailPopup()" 
+          style="margin-top: 10px; padding: 8px 15px; font-family:'VT323', monospace; color:#00ff00; background:#2e2b1f; border:1px solid #555533; cursor:pointer;">
+    Buy Now
+  </button>
+</div>
+</div>
+
+<!-- Email Popup -->
+<div id="emailPopup" class="modal">
+  <div class="modal-content">
+    <p style="color:#00ff00;">
+      ENTER YOUR EMAIL AND OUR TEAM OF EXPERTS WILL REACH OUT!:
+    </p>
+    <input type="text" id="emailInput" placeholder="example@cyberbuy.com" 
+           style="width: 100%; background:#2e2b1f; color:#00ff00; border:1px solid #555533;">
+    <p style="color:#00ff00; cursor:pointer; font-family:'VT323', monospace; margin-top:10px;" 
+       onclick="closeEmailPopup()">
+      &lt; SUBMIT
+    </p>
+  </div>
+</div>
+
+
+  <div class="product">
+    <h3>Synapse Link V2</h3>
+    <p>Directly link your thoughts to compatible devices. V2 enhances multitasking, memory retrieval, and cognitive speed… sometimes too well. Side effects may include involuntary typing, hearing others’ thoughts, and sporadic hallucinations. Use only under supervision.</p>
+    <p class="price">Retailing at $19,250</p>
+    <div style="text-align: center;">
+  <img src="pictures/synapselink.png" height="200"> <img src="pictures/synapselinkinuse.png" height="200">
+  <br>
+  <button onclick="showEmailPopup()" 
+          style="margin-top: 10px; padding: 8px 15px; font-family:'VT323', monospace; color:#00ff00; background:#2e2b1f; border:1px solid #555533; cursor:pointer;">
+    Buy Now
+  </button>
+</div>
+  </div>
+</section>
+
+
+<section id="ethics">
+  <h2>⚠ Ethics & Warnings</h2>
+  <p>Cybernetic augmentation raises ethical and security concerns including identity loss, hacking risk, and socioeconomic inequality.</p>
+  <p>Unauthorized firmware modifications may void your humanity warranty.</p>
+  <p>NeuroForge is not responsible for loss of free will, hallucinations, or emergent AI personalities.</p>
+</section>
+<br>
+<br>
+<footer>
+  <p>© 2084 CyberBuy Corporation | Human OS v2.0 Required</p>
+</footer>
+</body>
+
+</html>
