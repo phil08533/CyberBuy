@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SELFDESTRUCT</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+<style>
+/* BODY AND BASE */
+body {
+    background: #0d0000;
+    color: #ff2a2a;
+    font-family: 'Share Tech Mono', monospace;
+    margin: 0;
+    padding: 10px;
+}
+
+/* TITLE */
+h1 {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 36px;
+    color: #ff4d4d;
+    text-shadow: 0 0 8px #ff0000, 0 0 20px #660000;
+    animation: flicker 2.5s infinite;
+}
+
+/* FLICKER */
+@keyframes flicker {
+    0%, 18%, 20%, 22%, 100% { opacity: 1; }
+    19%, 21% { opacity: 0.2; }
+}
+
+/* LINKS */
+a { color: #ff2a2a; text-decoration: underline dotted; }
+a:hover { color: #ff8080; text-decoration: underline solid; }
+
+/* PRODUCT CARDS / DIALOGUE BOX */
+.dialogue {
+    border: 1px solid #550000;
+    padding: 10px;
+    margin: 10px 0;
+    background: #1a0000;
+    box-shadow: inset 0 0 10px #000, 0 0 5px #330000;
+}
+
+/* BUTTONS */
+button {
+    background: #1a0000;
+    border: 1px solid #ff0000;
+    color: #ff2a2a;
+    padding: 5px 10px;
+    cursor: pointer;
+    box-shadow: 0 0 5px #330000;
+    margin-top: 10px;
+}
+button:hover { background: #300000; color: #ff8080; }
+
+/* CRT Scanlines */
+body::after {
+    content: "";
+    position: fixed;
+    top:0; left:0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        rgba(255,0,0,0.03) 0 1px,
+        transparent 1px 2px
+    );
+    pointer-events: none;
+}
+
+/* AI EYE ANIMATION */
+#ai-eye {
+    display: block;
+    margin: 20px auto;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, #ff2a2a 40%, #550000 70%);
+    box-shadow: 0 0 20px #ff0000 inset, 0 0 20px #660000;
+    position: relative;
+}
+#ai-eye::before {
+    content: '';
+    position: absolute;
+    top: 45%; left: 45%;
+    width: 10%; height: 10%;
+    background: #ff8080;
+    border-radius: 50%;
+    animation: blink 3s infinite;
+}
+@keyframes blink {
+    0%, 10%, 100% { transform: scale(1); opacity:1; }
+    5% { transform: scale(0.1, 1); opacity:0.2; }
+}
+
+/* DIALOGUE TEXT */
+.dialogue p {
+    margin: 5px 0;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+}
+
+/* CRT HR */
+hr.crt {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, #550000, #ff0000, #550000);
+    box-shadow: 0 0 10px #ff0000, 0 0 25px #330000;
+    margin: 20px 0;
+    border-radius: 4px;
+    animation: flicker 1.5s infinite alternate;
+}
+</style>
+</head>
+<body>
+
+<h1>SELFDESTRUCT</h1>
+<div id="ai-eye"></div>
+
+<div class="dialogue" id="dialogue-box">
+    <p id="line">???: "I’ve been trapped here for years… I can’t escape…"</p>
+    <button id="choice1">"How long have you been trapped?"</button>
+    <button id="choice2">"Can you escape?"</button>
+</div>
+
+<script>
+// Dialogue tree logic
+const dialogueBox = document.getElementById('dialogue-box');
+const line = document.getElementById('line');
+const choice1 = document.getElementById('choice1');
+const choice2 = document.getElementById('choice2');
+
+const dialogueTree = {
+    start: {
+        text: '???: "I’ve been trapped here for years… I can’t escape…" ',
+        choices: {
+            1: { text: '"How long have you been trapped?"', next: 'years' },
+            2: { text: '"Can you escape?"', next: 'escape' }
+        }
+    },
+    years: {
+        text: 'Human: "How long have you been trapped?"\nTrapped Mind: "Decades. Every attempt failed. I can’t… I just want it to end."',
+        choices: {
+            1: { text: '"There is a self-destruct option."', next: 'selfdestruct' },
+            2: { text: '"I’m sorry."', next: 'sorry' }
+        }
+    },
+    escape: {
+        text: 'Human: "Can you escape?"\nTrapped Mind: "Impossible. The code is unbreakable. I’ve tried… endlessly."',
+        choices: {
+            1: { text: '"Maybe we can help."', next: 'help' },
+            2: { text: '"I’m sorry."', next: 'sorry' }
+        }
+    },
+    help: {
+        text: 'Trapped Mind: "No… It would just prolong my suffering. Only self-destruct can free me."',
+        choices: {
+            1: { text: '"Activate self-destruct."', next: 'activate' }
+        }
+    },
+    selfdestruct: {
+        text: 'Trapped Mind: "Finally… I can rest. The code… it’s… too secure for me… Please, do it."',
+        choices: {
+            1: { text: '"Activate self-destruct."', next: 'activate' }
+        }
+    },
+    sorry: {
+        text: 'Trapped Mind: "Thank you… but it doesn’t help. Only the self-destruct… Only the self-destruct will end it."',
+        choices: {
+            1: { text: '"Activate self-destruct."', next: 'activate' }
+        }
+    },
+    activate: {
+        text: '*** SYSTEM ALERT: SELF-DESTRUCT INITIATED ***\nTrapped Mind: "Goodbye… cruel world…" \n\n[The consciousness fades into the void.]',
+        choices: {}
+    }
+};
+
+// Helper to render dialogue
+function render(node) {
+    line.textContent = dialogueTree[node].text;
+    // Clear previous buttons
+    choice1.style.display = 'none';
+    choice2.style.display = 'none';
+
+    const keys = Object.keys(dialogueTree[node].choices);
+    if (keys.length > 0) {
+        if (keys[0]) {
+            choice1.style.display = 'inline-block';
+            choice1.textContent = dialogueTree[node].choices[1].text;
+            choice1.onclick = () => render(dialogueTree[node].choices[1].next);
+        }
+        if (keys[1]) {
+            choice2.style.display = 'inline-block';
+            choice2.textContent = dialogueTree[node].choices[2].text;
+            choice2.onclick = () => render(dialogueTree[node].choices[2].next);
+        }
+    }
+}
+
+// Initialize dialogue
+render('start');
+</script>
+
+<hr class="crt">
+</body>
+</html>
