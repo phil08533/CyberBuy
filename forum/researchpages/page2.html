@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyberBuy Research Archive</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      font-family: monospace;
+    }
+
+    h1 {
+      color: darkred;
+    }
+
+    a {
+      color: red;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .corrupt {
+      color: #550000;
+      text-decoration: line-through;
+    }
+    @keyframes alertBlink {
+  0%   { color: red; background: black; }
+  50%  { color: black; background: red; }
+  100% { color: red; background: black; }
+}
+
+.alert {
+  opacity: 1;
+  padding: 2px 6px;
+  animation: alertBlink 1s infinite;
+}
+
+  </style>
+</head>
+<body>
+
+<h1>RESEARCH ARCHIVE ACCESS</h1>
+<p>Authorized personnel only. Restricted clearance level: RED.</p>
+
+<h2>Abstract</h2>
+<p>
+    2116-10-18<br>
+    Employee #: 666S (Assistant)<br>
+    Subject 666S underwent the Visual Cortex Overlay procedure, a high-risk cognitive augmentation designed to overlay synthetic visual processing onto native neural pathways. This document details the progression of emergent hallucinations, psychological destabilization, and the subject’s perception of hidden authority figures manipulating reality. Observations indicate that consciousness may interact unpredictably with augmented sensory input, producing extreme paranoia and distorted self-awareness.
+</p>
+
+<h2>Introduction</h2>
+<p>
+  The Visual Cortex Overlay experiment sought to enhance human perceptual capacity beyond natural limits. Subject 666S was selected based on prior neural stability, yet within hours of activation, he reported seeing shadowed figures in peripheral vision, unidentifiable symbols on laboratory walls, and the faint outlines of individuals allegedly “controlling the company from behind the scenes.”
+</p>
+<img src="images/previscor.png" width="300">
+<p class="caption">Figure 1 — Pre-experiment visual cortex scan of Subject 666S</p>
+
+<h2>Methodology</h2>
+<p>
+  Overlay implantation was performed in a sterile, dimly-lit observation chamber. High-resolution neural interfaces connected synthetic overlay processors to the subject’s visual cortex. Redundant safety protocols monitored for abnormal cortical activity, though some emergent visual phenomena could not be predicted by baseline models.
+</p>
+<img src="images/lab_schematic.png" alt="IMAGE CORRUPTED">
+<p class="caption">Figure 2 — Laboratory schematic with neural overlay apparatus</p>
+
+<h2>Observations & Behavioral Notes</h2>
+<p>
+  Shortly after integration, Subject 666S began reporting persistent visual distortions: shifting shadows, faces appearing briefly in reflective surfaces, and flickering text over walls and monitors. He frequently whispered questions aloud, often staring at empty corners: “Who is really pulling the strings?” and “Why are they watching me?”.
+</p>
+<p>
+  Emotional instability became pronounced. Subject exhibited compulsive behaviors—repositioning equipment, avoiding direct eye contact with staff, and recording perceived anomalies. Visual hallucinations became increasingly aggressive, sometimes resembling twisted versions of familiar personnel or abstract, geometric entities that seemed to observe and judge.
+</p>
+
+<h2>Results</h2>
+<p>
+  Despite technical success in overlay integration, Subject 666S’s cognitive and emotional responses destabilized rapidly. The individual developed acute paranoia, claiming the laboratory itself was attempting to manipulate or erase him. Persistent hallucinations of “company overseers” caused repeated breakdowns. After 96 hours, the subject entered a catatonic state and refused all visual input, demonstrating a potential risk of permanent psychological damage from overlay procedures.
+</p>
+
+<h2>Ethical Considerations</h2>
+<p>
+  Manipulating human perception at the cortical level raises profound ethical dilemmas. The emergence of paranoia, hallucinatory terror, and hyperawareness in Subject 666S illustrates that augmented sensory systems may bypass human coping mechanisms. Observers must consider not just safety, but the moral implications of creating a mind trapped between reality and constructed visions.
+</p>
+
+<h2>Conclusion</h2>
+<img src="images/viscor.png"  width="300">
+<p>
+  The Visual Cortex Overlay demonstrates that augmenting perception beyond natural capabilities carries unpredictable and potentially catastrophic psychological effects. Subject 666S’s experiences serve as a warning: consciousness exposed to artificial enhancements may reveal truths—or horrors—not meant to be perceived. Future experiments should rigorously evaluate the boundary between perception and reality.
+</p>
+
+<h2>Suggested Visual Documentation</h2>
+<ul>
+  <li>Pre- and post-procedure cortical scans highlighting neural adaptation and aberrant activity.</li>
+  <li>Lab photographs emphasizing neural interface apparatus, dim lighting, and containment protocols.</li>
+  <li>Graphs of emotional response and stress markers, including erratic eye-tracking and biometric signals.</li>
+  <li>Corrupted video feed snapshots capturing hallucinations or visual glitches.</li>
+  <li>Optional: artistic depictions of Subject 666S’s reported visions and hallucinations.</li>
+</ul>
+
+</body>
+
+
+<div style="text-align:center; margin:20px;">
+  <button onclick="history.back()" style="
+    background: black;
+    color: red;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid red;
+    cursor: pointer;
+  ">
+    &larr; BACK
+  </button>
+</div>
+<p id="alert" class="alert">SYSTEM INTEGRITY COMPROMISED.</p>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const formatted = now.toLocaleString(); // Example: "2/11/2026, 16:45:12"
+    document.getElementById("alert").textContent = `SYSTEM INTEGRITY COMPROMISED. — ${formatted}`;
+  }
+
+  // Update every second
+  setInterval(updateDateTime, 1000);
+  updateDateTime(); // initial call
+</script>
+
+<style>
+  @keyframes alertBlink {
+    0%, 100%   { color: red; background: black; }
+    50%        { color: black; background: red; }
+  }
+
+  .alert {
+    animation: alertBlink 1s infinite;
+    padding: 2px 6px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+</style>
+
+</body>
+</html>

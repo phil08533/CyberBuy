@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyberBuy Research Archive — Page 4</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      font-family: monospace;
+    }
+
+    h1 {
+      color: darkred;
+    }
+
+    a {
+      color: red;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .corrupt {
+      color: #550000;
+      text-decoration: line-through;
+    }
+
+    @keyframes alertBlink {
+      0%   { color: red; background: black; }
+      50%  { color: black; background: red; }
+      100% { color: red; background: black; }
+    }
+
+    .alert {
+      opacity: 1;
+      padding: 2px 6px;
+      animation: alertBlink 1s infinite;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .caption {
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>RESEARCH ARCHIVE ACCESS</h1>
+<p>Authorized personnel only. Restricted clearance level: RED.</p>
+
+<h2>Abstract</h2>
+<p>
+    2066-03-12<br>
+    Employee #: 342B<br>
+    Subject 342B underwent the Neural Dream Trial, a high-risk experiment designed to interface artificial neural networks with the brain's dream-processing centers. This document chronicles emergent dream manipulation, psychological destabilization, and the blurring of reality and hallucination. Observations reveal that tampering with subconscious neural pathways can produce persistent existential dread and uncontrolled dream intrusion.
+</p>
+
+<h2>Introduction</h2>
+<p>
+  The Neural Dream Trial sought to explore the possibility of interfacing AI with human dreams to study consciousness and memory consolidation. Subject 342B was selected based on prior neural stability and high cognitive capacity. Within hours of integration, the subject reported vivid, recurring dream sequences in which they encountered shadowy figures, distorted landscapes, and whispered messages about hidden corporate overseers manipulating events in the waking world.
+</p>
+<img src="images/run.png" width="300">
+<p class="caption">Figure 1 — Pre-trial neural imaging of Subject 342B</p>
+
+<h2>Methodology</h2>
+<p>
+  AI-assisted dream induction was carried out using neural interfaces connected to the subject's limbic and visual cortices. The system monitored REM cycles and memory encoding, with active feedback loops intended to enhance dream vividness and recall. Observers noted irregular emergent dream patterns beyond predicted parameters within the first REM cycle.
+</p>
+<img src="images/lab_dreamschematic.png" alt="IMAGE CORRUPTED">
+<p class="caption">Figure 2 — Laboratory schematic showing dream induction and monitoring apparatus</p>
+
+<h2>Observations & Behavioral Notes</h2>
+<p>
+  Subject 342B initially reported lucid dreaming with enhanced sensory perception. Within 24 hours, dream content became increasingly invasive and vivid. The subject described encounters with "faceless operators" controlling both dreams and waking reality. Recurrent hallucinations persisted even outside REM cycles, with visual distortions bleeding into waking vision.
+</p>
+<p>
+  Behavioral analysis revealed acute anxiety, insomnia, and obsessive note-taking. Subject displayed repetitive attempts to "decode" dream patterns, often speaking aloud to unseen entities. Emotional instability intensified as the subject questioned reality, repeatedly asking: “Am I awake? Who is orchestrating this?”.
+</p>
+
+<h2>Results</h2>
+<p>
+  The Neural Dream Trial successfully manipulated and enhanced dream states; however, Subject 342B experienced profound psychological destabilization. Persistent intrusion of dream content into waking perception led to panic, disorientation, and repeated self-isolation. By 72 hours, the subject exhibited catatonia during wakefulness and compulsively engaged with monitoring equipment to validate the presence of "hidden overseers."
+</p>
+
+<h2>Ethical Considerations</h2>
+<p>
+  Interfacing AI with the subconscious mind presents extreme ethical concerns. Subject 342B’s experiences illustrate that tampering with dream mechanisms can induce existential terror and irreversible psychological trauma. Researchers must weigh the potential benefits of dream study against the inherent risk of destabilizing human consciousness.
+</p>
+
+<h2>Conclusion</h2>
+<img src="images/post_dreamscan.png" width="300">
+<p>
+  The Neural Dream Trial demonstrates that manipulation of dream states via artificial augmentation can grant unprecedented insight into consciousness, but carries severe psychological consequences. Subject 342B’s case highlights the dangers of merging AI with the subconscious: reality, perception, and dreams can collapse into one inescapable, terrifying continuum.
+</p>
+
+<h2>Suggested Visual Documentation</h2>
+<ul>
+  <li>Sequential neural scans documenting dream-state modulation and AI-induced activity.</li>
+  <li>Laboratory schematics of dream induction chambers and monitoring devices.</li>
+  <li>Graphs of REM cycle alterations, emotional response metrics, and stress markers.</li>
+  <li>Corrupted video and still images capturing dream intrusion phenomena.</li>
+  <li>Optional: artistic interpretations of Subject 342B’s hallucinated dreamscapes and shadowy operators.</li>
+</ul>
+
+<div style="text-align:center; margin:20px;">
+  <button onclick="history.back()" style="
+    background: black;
+    color: red;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid red;
+    cursor: pointer;
+  ">
+    &larr; BACK
+  </button>
+</div>
+
+<p id="alert" class="alert">SYSTEM INTEGRITY COMPROMISED.</p>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const formatted = now.toLocaleString();
+    document.getElementById("alert").textContent = `SYSTEM INTEGRITY COMPROMISED. — ${formatted}`;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
+
+</body>
+</html>

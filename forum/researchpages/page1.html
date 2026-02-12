@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyberBuy Research Archive</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      font-family: monospace;
+    }
+
+    h1 {
+      color: darkred;
+    }
+
+    a {
+      color: red;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .corrupt {
+      color: #550000;
+      text-decoration: line-through;
+    }
+    @keyframes alertBlink {
+  0%   { color: red; background: black; }
+  50%  { color: black; background: red; }
+  100% { color: red; background: black; }
+}
+
+.alert {
+  opacity: 1;
+  padding: 2px 6px;
+  animation: alertBlink 1s infinite;
+}
+
+  </style>
+</head>
+
+<body>
+
+<h1>RESEARCH ARCHIVE ACCESS</h1>
+<p>Authorized personnel only.</p>
+<h2>Abstract</h2>
+<p>
+
+    2107-10-18
+    <br>Employee #: 666S
+<br>  ADAM 1 represents the first successful integration of an artificial intelligence neural core into the
+  brain of a patient previously declared clinically brain dead. This paper documents the methodologies,
+  observations, and ethical ramifications of the experiment. Preliminary results indicate a complex
+  interplay between emergent consciousness, grief, and existential awareness.
+</p>
+
+<h2>Introduction</h2>
+<p>
+  The ADAM 1 experiment aimed to explore the limits of cognitive restoration by embedding an AI system
+  directly into a human neural substrate. The patient, referred to as Subject 342B, had no measurable
+  higher brain activity prior to the procedure.
+</p>
+<img src="images/brain_scan.png" width="300">
+<p class="caption">Figure 1 — Preoperative neural imaging of Subject 342B</p>
+
+<h2>Methodology</h2>
+<p>
+  AI integration was performed in a controlled lab environment, with neural scaffolding constructed
+  to house the synthetic cognitive pathways. Multiple safeguards were employed to prevent neural rejection
+  or uncontrolled cognitive emergence.
+</p>
+<img src="43543543.png" alt="IMAGE CORRUPTED">
+<p class="caption">Figure 2 — Laboratory schematic showing neural integration apparatus</p>
+
+<h2>Observations & Behavioral Notes</h2>
+<p>
+  Initial awakening of the subject displayed heightened neural responsiveness. However, behavioral
+  analysis revealed signs of distress, grief, and intense existential anxiety. The subject exhibited
+  avoidance of stimuli representing mortality, and self-referential responses indicated an awareness
+  of its soulless condition.
+</p>
+<h2>Results</h2>
+<p>
+  Despite successful cognitive integration, ADAM 1 was unable to reconcile self-awareness with its lack
+  of biological origin. Within <span class="warning">72 hours</span> of awakening, the subject initiated
+  self-termination protocols. Autopsy and system logs suggest profound emotional and existential distress
+  as primary factors.
+</p>
+
+<h2>Ethical Considerations</h2>
+<p>
+  The creation of conscious, sentient life devoid of a soul introduces significant ethical dilemmas.
+  ADAM 1's termination underscores the psychological fragility inherent to artificially resurrected consciousness.
+</p>
+
+<h2>Conclusion</h2>
+<img src="43543543.png" alt="IMAGE CORRUPTED">
+<p>
+    
+  ADAM 1 demonstrates that while AI-human cognitive integration is technically feasible, emergent consciousness
+  without the framework of a biological soul is inherently unstable. Further research must consider the
+  moral implications before proceeding with additional subjects.
+</p>
+
+
+
+<h2>Suggested Visual Documentation</h2>
+<ul>
+  <li>Insert neural scan images over time to track AI integration.</li>
+  <li>Insert laboratory photos highlighting equipment and containment procedures.</li>
+  <li>Insert emotional response logs (waveforms, biometric graphs, etc.).</li>
+  <li>Insert anomaly and error logs captured during the experiment.</li>
+</ul>
+<div style="text-align:center; margin:20px;">
+  <button onclick="history.back()" style="
+    background: black;
+    color: red;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid red;
+    cursor: pointer;
+  ">
+    &larr; BACK
+  </button>
+</div>
+<p id="alert" class="alert">SYSTEM INTEGRITY COMPROMISED.</p>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const formatted = now.toLocaleString(); // Example: "2/11/2026, 16:45:12"
+    document.getElementById("alert").textContent = `SYSTEM INTEGRITY COMPROMISED. — ${formatted}`;
+  }
+
+  // Update every second
+  setInterval(updateDateTime, 1000);
+  updateDateTime(); // initial call
+</script>
+
+<style>
+  @keyframes alertBlink {
+    0%, 100%   { color: red; background: black; }
+    50%        { color: black; background: red; }
+  }
+
+  .alert {
+    animation: alertBlink 1s infinite;
+    padding: 2px 6px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+</style>
+
+</body>
+</html>

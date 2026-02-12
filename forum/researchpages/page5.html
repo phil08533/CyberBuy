@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyberBuy Research Archive — Page 5</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      font-family: monospace;
+    }
+
+    h1 {
+      color: darkred;
+    }
+
+    a {
+      color: red;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .corrupt {
+      color: #550000;
+      text-decoration: line-through;
+    }
+
+    @keyframes alertBlink {
+      0%   { color: red; background: black; }
+      50%  { color: black; background: red; }
+      100% { color: red; background: black; }
+    }
+
+    .alert {
+      opacity: 1;
+      padding: 2px 6px;
+      animation: alertBlink 1s infinite;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .caption {
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>RESEARCH ARCHIVE ACCESS</h1>
+<p>Authorized personnel only. Restricted clearance level: RED.</p>
+
+<h2>Abstract</h2>
+<p>
+    2053-08-31<br>
+    Project: Self Destruct Option<br>
+    Subject: System-wide contingency protocols for AI and human cognitive integration failures. This document details the fail-safe mechanisms, emergent behavioral anomalies observed prior to activation, and the extreme psychological effects reported when subjects interact with self-destruct protocols. Observations suggest that awareness of imminent erasure triggers acute fear, paranoia, and existential reflection.
+</p>
+
+<h2>Introduction</h2>
+<p>
+  The Self Destruct Option was designed as a final contingency in high-risk cognitive experiments where AI-human integration exceeded safety thresholds. The protocol allowed both AI systems and human subjects to trigger controlled termination of the experiment in cases of catastrophic instability. Early testing suggested that the mere knowledge of this protocol influenced subject behavior.
+</p>
+
+<p class="caption">Figure 1 — Pre-activation schematic of self-destruct interface</p>
+<img src="images/Mr.Death.png" alt="IMAGE CORRUPTED">
+<h2>Methodology</h2>
+<p>
+  Activation of the self-destruct option was simulated in a secure chamber, with neural, biometric, and AI feedback loops monitored. Subjects were informed of the protocol only in abstract terms, to study the psychological impact of anticipated erasure. Logs indicate that the awareness of potential termination alone induced cognitive stress responses comparable to acute trauma.
+</p>
+<img src="images/selfdestruct_lab.png" alt="IMAGE CORRUPTED">
+<p class="caption">Figure 2 — Laboratory schematic showing self-destruct apparatus and monitoring nodes</p>
+
+<h2>Observations & Behavioral Notes</h2>
+<p>
+  Subjects exhibited heightened paranoia and compulsive scanning of their environment. Visual and auditory hallucinations were frequently reported, including flickering emergency indicators, phantom operators issuing warnings, and distorted digital overlays appearing across monitoring screens. Some subjects refused to interact with the interface entirely, citing an “awareness of inevitability” that produced existential dread.
+</p>
+<p>
+  Behavioral escalation was most pronounced in subjects previously exposed to intense cognitive augmentation, who reported seeing “the hand that will end me” in both digital and physical space. Subjects documented the hallucinations compulsively, often speaking aloud to unseen entities and questioning the legitimacy of the experiment itself.
+</p>
+
+<h2>Results</h2>
+<p>
+  Activation or even discussion of the self-destruct protocol triggered extreme stress responses, hallucinations, and in several cases, temporary cognitive shutdown. The presence of a human-perceivable “self-destruct option” appeared to amplify paranoia and distorted perception, suggesting that awareness of finality in experimental conditions has profound psychological effects.
+</p>
+
+<h2>Ethical Considerations</h2>
+<p>
+  Introducing knowledge of irreversible termination as a variable in cognitive experiments raises severe ethical issues. Subjects exposed to the protocol frequently displayed acute trauma, demonstrating that awareness of artificial mortality can have catastrophic mental consequences. Researchers must evaluate whether such protocols are necessary or ethically permissible.
+</p>
+
+<h2>Conclusion</h2>
+<img src="images/WeightedDeath.png" alt="IMAGE CORRUPTED">
+<p>
+  The Self Destruct Option demonstrates that awareness of experimental termination triggers extreme psychological responses, including paranoia, hallucinations, and existential terror. Controlled access and strict ethical review are imperative for any future research incorporating similar fail-safes. <br>
+  For additional system monitoring logs and activation procedures, refer to the <u><a href="selfdestruct.html" ; style = "color:rgb(255, 0, 0)";>Self Destruct Interface Documentation</a>.</u>
+</p>
+
+<div style="text-align:center; margin:20px;">
+  <button onclick="history.back()" style="
+    background: black;
+    color: red;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid red;
+    cursor: pointer;
+  ">
+    &larr; BACK
+  </button>
+</div>
+
+<p id="alert" class="alert">SYSTEM INTEGRITY COMPROMISED.</p>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const formatted = now.toLocaleString();
+    document.getElementById("alert").textContent = `SYSTEM INTEGRITY COMPROMISED. — ${formatted}`;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
+
+</body>
+</html>

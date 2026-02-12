@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CyberBuy Research Archive — Page 3</title>
+  <style>
+    body {
+      background: black;
+      color: red;
+      font-family: monospace;
+    }
+
+    h1 {
+      color: darkred;
+    }
+
+    a {
+      color: red;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .corrupt {
+      color: #550000;
+      text-decoration: line-through;
+    }
+
+    @keyframes alertBlink {
+      0%   { color: red; background: black; }
+      50%  { color: black; background: red; }
+      100% { color: red; background: black; }
+    }
+
+    .alert {
+      opacity: 1;
+      padding: 2px 6px;
+      animation: alertBlink 1s infinite;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .caption {
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>RESEARCH ARCHIVE ACCESS</h1>
+<p>Authorized personnel only. Restricted clearance level: RED.</p>
+
+<h2>Abstract</h2>
+<p>
+    2080-09-27<br>
+    Employee #: 892X<br>
+    Subject 892X participated in the Cognitive Acceleration Prototype, a high-risk neural enhancement experiment designed to amplify learning, memory, and decision-making speeds far beyond human norms. This report chronicles progressive cognitive overload, anomalous perception of time, and hallucinations suggesting manipulation by unseen entities. Early observations reveal emergent awareness of hidden systemic control, with persistent anxiety and compulsive behaviors.
+</p>
+
+<h2>Introduction</h2>
+<p>
+  The Cognitive Acceleration Prototype aimed to push human cognition past natural constraints by artificially enhancing neural connectivity. Subject 892X displayed extraordinary baseline intelligence and rapid problem-solving skills. Within 24 hours of activation, the subject reported temporal distortions, perceiving multiple timelines and “hidden operators” in the lab, claiming to anticipate the subject’s thoughts before they occurred.
+</p>
+<img src="images/lab.png" width="300">
+<p class="caption">Figure 1 — Pre-procedure cognitive neural mapping of Subject 892X</p>
+
+<h2>Methodology</h2>
+<p>
+  High-precision cortical implants and neuro-stimulation arrays were deployed to accelerate synaptic processing. Environmental stimuli were carefully controlled, though data logging revealed unexpected emergent feedback loops in neural activity. Subject 892X was monitored continuously for signs of cognitive stress, dissociation, and hallucination onset.
+</p>
+<img src="images/lab_cog_schematic.png" alt="IMAGE CORRUPTED">
+<p class="caption">Figure 2 — Laboratory schematic showing cortical enhancement apparatus</p>
+
+<h2>Observations & Behavioral Notes</h2>
+<p>
+  Within 48 hours, Subject 892X demonstrated heightened problem-solving and memory retention, but also increasingly erratic behaviors. The subject frequently whispered about “who is really running the system” and displayed signs of paranoid hyperawareness. Visual distortions included fleeting faces in monitors, warped lab reflections, and text appearing over physical surfaces. Subject began recording these anomalies obsessively, showing compulsive behavior consistent with emergent paranoia.
+</p>
+<p>
+  Emotional instability intensified. Subject 892X appeared to experience temporal fragmentation, reporting events before they occurred and feeling observed by unseen entities. Repetitive hand movements and avoidance of reflective surfaces were documented. Observers noted acute distress during periods of high cognitive load, often accompanied by muttered references to “the ones behind the prototype.”
+</p>
+
+<h2>Results</h2>
+<p>
+  Cognitive acceleration successfully enhanced neural processing, yet subject 892X’s emergent awareness destabilized mental equilibrium. Persistent perception of unseen controllers caused repeated breakdowns and temporary catatonia. After 96 hours, subject refused further stimulation and displayed self-imposed isolation within the containment chamber. Data suggests high cognitive acceleration carries significant risk of psychotic episodes, particularly in highly intelligent individuals.
+</p>
+
+<h2>Ethical Considerations</h2>
+<p>
+  Artificially enhancing cognition introduces profound ethical challenges. The emergence of paranoia, hallucinations, and temporal disorientation in Subject 892X demonstrates that exceeding natural cognitive limits may expose the mind to existential distress. Experimentation must carefully consider the long-term psychological consequences of accelerating thought beyond human thresholds.
+</p>
+
+<h2>Conclusion</h2>
+<img src="images/post_cogscan.png" width="300">
+<p>
+  The Cognitive Acceleration Prototype illustrates the peril of augmenting human intelligence without safeguards against emergent paranoia and hallucinatory perception. Subject 892X serves as a warning: pushing cognition past its natural limits can produce sentience and insight, but also profound psychological instability. Future studies must weigh potential cognitive gains against existential risk.
+</p>
+
+<h2>Suggested Visual Documentation</h2>
+<ul>
+  <li>Sequential cortical mapping pre- and post-acceleration showing neural adaptation and overactivity.</li>
+  <li>Laboratory equipment and cortical enhancement arrays in operational setups.</li>
+  <li>Graphs of cognitive load, stress responses, and neural oscillation anomalies.</li>
+  <li>Video stills or corrupted recordings illustrating hallucinations or temporal distortions.</li>
+  <li>Optional: visualizations of Subject 892X’s perceived hidden operators and layered timelines.</li>
+</ul>
+
+<div style="text-align:center; margin:20px;">
+  <button onclick="history.back()" style="
+    background: black;
+    color: red;
+    font-family: monospace;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: 2px solid red;
+    cursor: pointer;
+  ">
+    &larr; BACK
+  </button>
+</div>
+
+<p id="alert" class="alert">SYSTEM INTEGRITY COMPROMISED.</p>
+
+<script>
+  function updateDateTime() {
+    const now = new Date();
+    const formatted = now.toLocaleString();
+    document.getElementById("alert").textContent = `SYSTEM INTEGRITY COMPROMISED. — ${formatted}`;
+  }
+  setInterval(updateDateTime, 1000);
+  updateDateTime();
+</script>
+
+</body>
+</html>
