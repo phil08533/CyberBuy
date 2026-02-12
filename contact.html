@@ -1,76 +1,121 @@
 <!DOCTYPE html>
 <html>
+
+<script>
+function showTerms() {
+  fetch('terms.txt') // make sure terms.txt is in the same folder
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('termsText').textContent = data;
+      document.getElementById('termsModal').style.display = 'block';
+    })
+    .catch(err => console.error('Failed to load terms.txt:', err));
+}
+
+function closeTerms() {
+  document.getElementById('termsModal').style.display = 'none';
+}
+
+
+function showEmailPopup() {
+  document.getElementById('emailPopup').style.display = 'block';
+}
+
+function closeEmailPopup() {
+  document.getElementById('emailPopup').style.display = 'none';
+}
+</script>
+
 <head>
-  <title>NeuroForge Cybernetic Implants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Averia+Sans+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+  <title>CyberBuy</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>
-  <h1>NEUROFORGE</h1>
-  <p>Next-Generation Human Augmentation</p>
+<header style="text-align: center; color:#00ff00; font-family:'VT323', monospace; margin-top:10px;">
+<hr class="crt">
+<pre>
+                                                                                
+                      ,,                                                        
+  .g8"""bgd          *MM                       `7MM"""Yp,                       
+.dP'     `M           MM                         MM    Yb                       
+dM'       ``7M'   `MF'MM,dMMb.   .gP"Ya `7Mb,od8 MM    dP `7MM  `7MM `7M'   `MF'
+MM           VA   ,V  MM    `Mb ,M'   Yb  MM' "' MM"""bg.   MM    MM   VA   ,V  
+MM.           VA ,V   MM     M8 8M""""""  MM     MM    `Y   MM    MM    VA ,V   
+`Mb.     ,'    VVV    MM.   ,M9 YM.    ,  MM     MM    ,9   MM    MM     VVV    
+  `"bmmmd'     ,V     P^YbmdP'   `Mbmmd'.JMML. .JMMmmmd9    `Mbod"YML.   ,V     
+              ,V                                                        ,V      
+           OOb"                                                      OOb"          
+                                                                           
+</pre>
+<p style="margin:5px 0 0 0; color:#00ff00;">Next-Generation Human Augmentation Technology</p>
 </header>
+<hr class="crt">
 
-<nav>
-  <a href="#neural">Neural</a>
-  <a href="#vision">Vision</a>
-  <a href="#body">Body</a>
-  <a href="#ethics">Ethics</a>
+
+<!-- Terms Popup -->
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <pre id="termsText"></pre>
+    <p style="color:#00ff00; cursor:pointer;" onclick="closeTerms();">
+      &lt; AGREE
+    </p>
+  </div>
+</div>
+
+<nav style = "text-align: center;">
+    <a href="home.html"; >Home</a>
+    <a href="neural.html";>Neural</a>
+    <a href="visual.html";>Visual</a>
+    <a href="bodymod.html";>Body Modification</a>
+    <a href="contact.html"; style = "color:rgb(120, 216, 133) ; text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;";>Contact/Help</a>
+<hr class="crt">
 </nav>
 
+
 <section id="neural">
-  <h2>🧠 Neural Implants</h2>
+  <h2 style = "text-align: center;">Contact Us</h2>
 
-  <div class="product">
-    <h3>Neural Memory Booster v3.1</h3>
-    <p>Enhances short-term memory capacity by 340% using synthetic hippocampal nodes.</p>
-    <p class="price">$14,999</p>
-    <button>Pre-Order</button>
+<div class="product">
+  <div style="text-align: center;">
+
+  <button onclick="showEmailPopup()" 
+          style="margin-top: 10px; padding: 8px 15px; font-family:'VT323', monospace; color:#00ff00; background:#2e2b1f; border:1px solid #555533; cursor:pointer;">
+    Help
+  </button>
+
+<br>
+<p>
+  For further help please check out the forum to find solutions to common problems 
+  <a href="/forum/home.html" target="_blank" style="color:red;">HERE</a>
+</p>
+
+
+
+<br>
+</div>
+</div>
+
+<!-- Email Popup -->
+<div id="emailPopup" class="modal">
+  <div class="modal-content">
+    <p style="color:#00ff00;">
+      ENTER YOUR EMAIL AND OUR EXPERTS WILL REACH OUT TO YOU.
+    </p>
+    <input type="text" id="emailInput" placeholder="example@cyberbuy.com" 
+           style="width: 100%; background:#2e2b1f; color:#00ff00; border:1px solid #555533;">
+    <p style="color:#00ff00; cursor:pointer; font-family:'VT323', monospace; margin-top:10px;" 
+       onclick="closeEmailPopup()">
+      &lt; SUBMIT
+    </p>
   </div>
+</div>
 
-  <div class="product">
-    <h3>Brain Firewall Module</h3>
-    <p>Protects against neural hacking and unauthorized cognitive intrusion.</p>
-    <p class="price">$8,450</p>
-    <button>Pre-Order</button>
-  </div>
-</section>
 
-<section id="vision">
-  <h2>👁 Visual Enhancements</h2>
-
-  <div class="product">
-    <h3>NightSight Optics</h3>
-    <p>Full-spectrum night vision with augmented reality overlays.</p>
-    <p class="price">$6,299</p>
-    <button>Pre-Order</button>
-  </div>
-
-  <div class="product">
-    <h3>ZoomVision 10x Implant</h3>
-    <p>Optical zoom capability integrated directly into retinal hardware.</p>
-    <p class="price">$4,900</p>
-    <button>Pre-Order</button>
-  </div>
-</section>
-
-<section id="body">
-  <h2>💪 Body Upgrades</h2>
-
-  <div class="product">
-    <h3>Titanium Skeletal Reinforcement</h3>
-    <p>Increases bone strength by 800% using nano-titanium lattice structure.</p>
-    <p class="price">$19,999</p>
-    <button>Pre-Order</button>
-  </div>
-
-  <div class="product">
-    <h3>Reflex Accelerator Chip</h3>
-    <p>Reduces neural response time by 72%.</p>
-    <p class="price">$7,750</p>
-    <button>Pre-Order</button>
-  </div>
-</section>
 
 <section id="ethics">
   <h2>⚠ Ethics & Warnings</h2>
@@ -78,10 +123,11 @@
   <p>Unauthorized firmware modifications may void your humanity warranty.</p>
   <p>NeuroForge is not responsible for loss of free will, hallucinations, or emergent AI personalities.</p>
 </section>
-
+<br>
+<br>
 <footer>
-  <p>© 2084 NeuroForge Corporation | Human OS v2.0 Required</p>
+  <p>© 2084 CyberBuy Corporation | Human OS v2.0 Required</p>
 </footer>
-
 </body>
+
 </html>

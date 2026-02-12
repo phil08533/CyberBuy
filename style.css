@@ -4,6 +4,8 @@ body {
   font-family: 'Share Tech Mono', monospace;
   margin: 0;
   padding: 10px;
+ font-family: "Averia Sans Libre", sans-serif;
+  
 }
 
 h1 {
@@ -20,6 +22,16 @@ h1 {
   20%, 22%, 24%, 55% { opacity: 0.4; }
 }
 
+.averia-sans-libre-regular {
+  font-family: "Averia Sans Libre", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+h1, h2 {
+  font-family: "VT323", monospace;
+}
 a {
   color: #00ff00;
   text-decoration: underline dotted;
@@ -125,4 +137,20 @@ body::after {
   font-family: 'VT323', monospace;
   cursor: pointer;
   color: #00ff00;
+}
+hr.crt {
+  border: none;                  /* remove default line */
+  height: 2px;                   /* thickness of the line */
+  background: linear-gradient(90deg, #22c55e, rgb(205, 255, 198), #22c55e); /* neon gradient */
+  box-shadow: 0 0 8px #22c55e, 0 0 16px rgb(243, 16, 16); /* glow effect */
+  margin: 20px 0;                /* spacing above/below */
+  border-radius: 4px;             /* rounded edges */
+  animation: flicker 2s infinite alternate; /* optional flicker animation */
+}
+
+/* Flickering neon effect */
+@keyframes flicker {
+  0% { opacity: 0.8; box-shadow: 0 0 6px #22c55e, 0 0 12px rgb(0, 255, 64); }
+  50% { opacity: 1; box-shadow: 0 0 10px #22c55e, 0 0 20px rgb(56, 255, 16); }
+  100% { opacity: 0.85; box-shadow: 0 0 8px #22c55e, 0 0 16px rgb(51, 255, 0); }
 }
