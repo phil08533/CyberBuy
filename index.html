@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CyberBuy Terminal</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  background: black;
+  color: #00ff00;
+  font-family: "VT323", monospace;
+  text-align: center;
+  padding-top: 10%;
+}
+
+button {
+  background: #2e2b1f;
+  color: #00ff00;
+  border: 1px solid #555533;
+  padding: 10px 20px;
+  font-family: "VT323", monospace;
+  cursor: pointer;
+}
+
+#radioBox {
+  border: 1px solid #00ff00;
+  padding: 15px;
+  width: 300px;
+  margin: auto;
+  background: #0a0a0a;
+  box-shadow: 0 0 10px #00ff00;
+  display: none;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #ff0000;
+  background: black;
+  border-top: 1px solid #ff0000;
+  padding: 100px;
+  font-family: "VT323", monospace;
+}
+#mainContent {
+  display: none;
+}
+
+.cursor {
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BOOT TERMINAL -->
+<div id="bootScreen">
+  <p id="bootText"></p><span class="cursor">|</span>
+</div>
+
+<!-- MAIN TERMINAL CONTENT -->
+<div id="mainContent">
+<pre id="terminalOutput"></pre>
+
+<!-- RADIO PLAYER -->
+<div id="radioBox">
+  <p>▶ CYBER RADIO FEED</p>
+  <p id="trackTitle">TRACK: LOADING...</p>
+  <button onclick="playPause()">PLAY / PAUSE</button>
+  <button onclick="nextTrack()">SKIP</button>
+</div>
+
+<br>
+<button onclick="openHome()">ENTER CYBERBUY</button>
+</div>
+
+<!-- AUDIO -->
+<audio id="radioPlayer"></audio>
+
+<script>
+// ================= BOOT TEXT =================
+const bootText = "Loading Neural Interface... Access Granted.";
+let bootIndex = 0;
+
+function typeBoot() {
+  if (bootIndex < bootText.length) {
+    document.getElementById("bootText").textContent += bootText.charAt(bootIndex);
+    bootIndex++;
+    setTimeout(typeBoot, 50);
+  } else {
+    setTimeout(startMainTerminal, 1500);
+  }
+}
+typeBoot();
+
+// ================= MAIN TERMINAL TEXT =================
+const terminalLines = [
+  "CYBERBUY CORPORATE NETWORK",
+  "HUMAN AUGMENTATION DIVISION",
+  "ACCESS TERMINAL READY",
+  "",
+  "Please keep music open/playing during experience."
+];
+
+let lineIndex = 0;
+let charIndex = 0;
+
+function startMainTerminal() {
+  document.getElementById("bootScreen").style.display = "none";
+  document.getElementById("mainContent").style.display = "block";
+  typeTerminal();
+}
+
+function typeTerminal() {
+  if (lineIndex < terminalLines.length) {
+    let line = terminalLines[lineIndex];
+    let output = document.getElementById("terminalOutput");
+
+    if (charIndex < line.length) {
+      output.textContent += line.charAt(charIndex);
+      charIndex++;
+      setTimeout(typeTerminal, 40);
+    } else {
+      output.textContent += "\n";
+      lineIndex++;
+      charIndex = 0;
+      setTimeout(typeTerminal, 300);
+    }
+  } else {
+    // Show UI after typing finishes
+    document.getElementById("radioBox").style.display = "block";
+  }
+}
+
+// ================= RADIO PLAYER =================
+const playlist = [
+  "music/cyber1.mp3",
+  "music/cyber2.mp3",
+  "music/cyber3.mp3",
+  "music/cyber4.mp3",
+  "music/cyber5.mp3",
+  "music/cyber6.mp3",
+  "music/cyber7.mp3",
+  "music/cyber8.mp3",
+  "music/cyber9.mp3",
+  "music/cyber10.mp3",
+  "music/cyber11.mp3",
+  "music/cyber12.mp3"
+];
+
+let currentTrack = 0;
+const player = document.getElementById("radioPlayer");
+const title = document.getElementById("trackTitle");
+
+function loadTrack() {
+  player.src = playlist[currentTrack];
+  title.textContent = "TRACK: " + playlist[currentTrack].split("/").pop();
+}
+
+function playPause() {
+  if (player.paused) player.play();
+  else player.pause();
+}
+
+function nextTrack() {
+  currentTrack = (currentTrack + 1) % playlist.length;
+  loadTrack();
+  player.play();
+}
+
+loadTrack();
+
+function openHome() {
+  window.open("home.html", "_blank");
+}
+</script>
+<footer>SYSTEM ARCHITECT: PHILIP GONZALES 2.12.2026</footer>
+</body>
+</html>
