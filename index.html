@@ -84,6 +84,7 @@ footer {
 <audio id="radioPlayer"></audio>
 
 <script>
+  
 // ================= BOOT TEXT =================
 const bootText = "Loading Neural Interface... Access Granted.";
 let bootIndex = 0;
@@ -174,11 +175,24 @@ function nextTrack() {
   player.play();
 }
 
-loadTrack();
+loadTrack(); // load first track
+
+// ================= AUTO-PLAY & LOOP ALL TRACKS =================
+player.addEventListener("ended", () => {
+  currentTrack = (currentTrack + 1) % playlist.length; // go to next track
+  loadTrack();
+  player.play();
+});
+
+// Optional: allow auto-play after user interacts with page
+document.getElementById("mainContent").addEventListener("click", () => {
+  if (player.paused) player.play();
+});
 
 function openHome() {
   window.open("home.html", "_blank");
 }
+
 </script>
 <footer>SYSTEM ARCHITECT: PHILIP GONZALES 2.12.2026</footer>
 </body>
