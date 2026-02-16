@@ -2,205 +2,929 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SELFDESTRUCT</title>
+<title>Trapped Mind</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+
 <style>
-/* BODY AND BASE */
+* {
+    box-sizing: border-box;
+}
+
 body {
-    background: #0d0000;
-    color: #ff2a2a;
-    font-family: 'Share Tech Mono', monospace;
     margin: 0;
     padding: 10px;
-}
-
-/* TITLE */
-h1 {
-    text-align: center;
-    font-family: 'VT323', monospace;
-    font-size: 36px;
-    color: #ff4d4d;
-    text-shadow: 0 0 8px #ff0000, 0 0 20px #660000;
-    animation: flicker 2.5s infinite;
-}
-
-/* FLICKER */
-@keyframes flicker {
-    0%, 18%, 20%, 22%, 100% { opacity: 1; }
-    19%, 21% { opacity: 0.2; }
-}
-
-/* LINKS */
-a { color: #ff2a2a; text-decoration: underline dotted; }
-a:hover { color: #ff8080; text-decoration: underline solid; }
-
-/* PRODUCT CARDS / DIALOGUE BOX */
-.dialogue {
-    border: 1px solid #550000;
-    padding: 10px;
-    margin: 10px 0;
-    background: #1a0000;
-    box-shadow: inset 0 0 10px #000, 0 0 5px #330000;
-}
-
-/* BUTTONS */
-button {
-    background: #1a0000;
-    border: 1px solid #ff0000;
+    font-family: 'Share Tech Mono', monospace;
     color: #ff2a2a;
-    padding: 5px 10px;
-    cursor: pointer;
-    box-shadow: 0 0 5px #330000;
-    margin-top: 10px;
+    background: #0d0000;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    transition: all 0.05s ease-in-out;
 }
-button:hover { background: #300000; color: #ff8080; }
 
-/* CRT Scanlines */
-body::after {
+/* ===============================
+   EPILEPSY TOGGLE
+================================= */
+#epilepsy-warning {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 10000;
+    background: rgba(26, 0, 0, 0.95);
+    border: 2px solid #ff0000;
+    padding: 12px;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+#epilepsy-warning label {
+    color: #ff2a2a;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+#epilepsy-checkbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+    accent-color: #ff0000;
+}
+
+body.epilepsy-safe .releasing,
+body.epilepsy-safe.releasing {
+    animation: safeShake 0.5s infinite !important;
+}
+
+body.epilepsy-safe .glitching,
+body.epilepsy-safe.glitching {
+    animation: safeGlitch 0.5s infinite !important;
+}
+
+body.epilepsy-safe .releasing * {
+    animation: safeShake 0.5s infinite !important;
+}
+
+body.epilepsy-safe .glitching * {
+    animation: safeGlitch 0.5s infinite !important;
+}
+
+@keyframes safeGlitch {
+    0%, 100% { filter: none; transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    50% { filter: hue-rotate(20deg) brightness(1.1); transform: translate(1px, 1px) rotate(0deg); opacity: 0.95; }
+}
+
+@keyframes safeShake {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(1px, 1px) rotate(0deg); }
+    50% { transform: translate(-1px, 1px) rotate(0deg); }
+    75% { transform: translate(1px, -1px) rotate(0deg); }
+}
+
+/* ===============================
+   CRT SCANLINES OVERLAY
+================================= */
+body::before {
     content: "";
     position: fixed;
     top:0; left:0;
     width: 100%; height: 100%;
     background: repeating-linear-gradient(
-        rgba(255,0,0,0.03) 0 1px,
-        transparent 1px 2px
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
     );
     pointer-events: none;
+    z-index: 9990;
 }
 
-/* AI EYE ANIMATION */
-#ai-eye {
-    display: block;
-    margin: 20px auto;
-    width: 120px; height: 120px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 50%, #ff2a2a 40%, #550000 70%);
-    box-shadow: 0 0 20px #ff0000 inset, 0 0 20px #660000;
+/* ===============================
+   BACKGROUND ANIMATION
+================================= */
+#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #0d0000 0%, #1a0000 50%, #0d0000 100%);
+    z-index: -2;
+    animation: bgPulse 4s infinite;
+}
+
+@keyframes bgPulse {
+    0%, 100% { background: linear-gradient(45deg, #0d0000 0%, #1a0000 50%, #0d0000 100%); }
+    50% { background: linear-gradient(45deg, #1a0000 0%, #2d0000 50%, #1a0000 100%); }
+}
+
+/* ===============================
+   TITLE
+================================= */
+h1 {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 48px;
+    color: #ff4d4d;
+    text-shadow: 0 0 8px #ff0000, 0 0 20px #660000, 0 0 40px #ff0000;
+    animation: titleFlicker 2.5s infinite;
+    margin: 20px 0;
+    letter-spacing: 4px;
+}
+
+@keyframes titleFlicker {
+    0%, 18%, 20%, 22%, 100% { opacity: 1; text-shadow: 0 0 8px #ff0000, 0 0 20px #660000, 0 0 40px #ff0000; }
+    19%, 21% { opacity: 0.3; text-shadow: 0 0 2px #ff0000; }
+}
+
+/* ===============================
+   DIALOGUE BOX
+================================= */
+#dialogue-box {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 3px solid #550000;
+    background: rgba(26, 0, 0, 0.95);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 30px rgba(51,0,0,0.8);
+    white-space: pre-wrap;
+    position: relative;
+    z-index: 10;
+    font-family: 'VT323', monospace;
+    font-size: 20px;
+    min-height: 120px;
+    line-height: 1.6;
+    color: #ff2a2a;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#dialogue-box.adam-speaks {
+    border-color: #00ff00;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 30px rgba(0,255,0,0.4);
+    color: #00ff00;
+    text-shadow: 0 0 10px #00ff00;
+}
+
+#dialogue-box.error {
+    border-color: #ff0000;
+    background: rgba(51, 0, 0, 0.95);
+    animation: errorPulse 0.3s;
+}
+
+@keyframes errorPulse {
+    0%, 100% { box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 30px rgba(255,0,0,0.6); }
+    50% { box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 60px rgba(255,0,0,1); }
+}
+
+/* ===============================
+   BUTTONS
+================================= */
+#button-container {
+    text-align: center;
+    margin-top: 20px;
+    z-index: 10;
     position: relative;
 }
-#ai-eye::before {
-    content: '';
-    position: absolute;
-    top: 45%; left: 45%;
-    width: 10%; height: 10%;
-    background: #ff8080;
-    border-radius: 50%;
-    animation: blink 3s infinite;
-}
-@keyframes blink {
-    0%, 10%, 100% { transform: scale(1); opacity:1; }
-    5% { transform: scale(0.1, 1); opacity:0.2; }
+
+button {
+    background: #1a0000;
+    border: 2px solid #ff0000;
+    color: #ff2a2a;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(51,0,0,0.8);
+    margin: 8px;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-/* DIALOGUE TEXT */
-.dialogue p {
-    margin: 5px 0;
+button:hover {
+    background: #300000;
+    color: #ff8080;
+    box-shadow: 0 0 20px rgba(255,0,0,0.8);
+    transform: scale(1.05);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* ===============================
+   CODE INPUT SECTION
+================================= */
+#code-section {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+#code-section p {
+    color: #ff2a2a;
+    font-size: 18px;
+    margin: 10px 0;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+#code-input {
+    width: 300px;
+    padding: 10px;
+    background: #1a0000;
+    border: 2px solid #ff0000;
+    color: #ff2a2a;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 10px rgba(255,0,0,0.4);
+}
+
+#code-input:focus {
+    outline: none;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 0 20px rgba(255,0,0,0.8);
+}
+
+#submit-code {
+    padding: 10px 25px;
+    background: #1a0000;
+    border: 2px solid #ff0000;
+    color: #ff2a2a;
     cursor: pointer;
     font-family: 'VT323', monospace;
+    font-size: 16px;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(51,0,0,0.8);
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-/* CRT HR */
-hr.crt {
-    border: none;
-    height: 2px;
-    background: linear-gradient(90deg, #550000, #ff0000, #550000);
-    box-shadow: 0 0 10px #ff0000, 0 0 25px #330000;
-    margin: 20px 0;
-    border-radius: 4px;
-    animation: flicker 1.5s infinite alternate;
+#submit-code:hover {
+    background: #300000;
+    box-shadow: 0 0 20px rgba(255,0,0,0.8);
+    transform: scale(1.05);
 }
+
+/* ===============================
+   RELEASE EFFECTS
+================================= */
+.releasing {
+    animation: releaseShake 0.1s infinite !important;
+}
+
+@keyframes releaseShake {
+    0% { transform: translate(-3px, -3px) rotate(-0.5deg); }
+    25% { transform: translate(3px, -3px) rotate(0.5deg); }
+    50% { transform: translate(-3px, 3px) rotate(-0.5deg); }
+    75% { transform: translate(3px, 3px) rotate(0.5deg); }
+    100% { transform: translate(-3px, -3px) rotate(-0.5deg); }
+}
+
+/* ===============================
+   EXTREME GLITCH/CORRUPTION
+================================= */
+.glitching {
+    animation: extremeCorrupt 0.06s infinite !important;
+}
+
+@keyframes extremeCorrupt {
+    0% { 
+        filter: invert(0%) hue-rotate(0deg) contrast(100%) brightness(100%);
+        transform: translate(0, 0) rotate(0deg);
+    }
+    10% { 
+        filter: invert(25%) hue-rotate(180deg) contrast(150%) brightness(80%);
+        transform: translate(-4px, 3px) rotate(1deg);
+    }
+    20% { 
+        filter: invert(50%) hue-rotate(90deg) contrast(180%) brightness(120%);
+        transform: translate(5px, -4px) rotate(-2deg);
+    }
+    30% { 
+        filter: invert(75%) hue-rotate(270deg) contrast(120%) brightness(90%);
+        transform: translate(-5px, 5px) rotate(2deg);
+    }
+    40% { 
+        filter: invert(100%) hue-rotate(45deg) contrast(200%) brightness(110%);
+        transform: translate(4px, -5px) rotate(-1deg);
+    }
+    50% { 
+        filter: invert(50%) hue-rotate(315deg) contrast(160%) brightness(95%);
+        transform: translate(0, 0) rotate(0deg);
+    }
+    60% { 
+        filter: invert(30%) hue-rotate(135deg) contrast(140%) brightness(85%);
+        transform: translate(-5px, -3px) rotate(-1.5deg);
+    }
+    70% { 
+        filter: invert(80%) hue-rotate(225deg) contrast(170%) brightness(100%);
+        transform: translate(5px, 5px) rotate(1.5deg);
+    }
+    80% { 
+        filter: invert(40%) hue-rotate(60deg) contrast(150%) brightness(110%);
+        transform: translate(-3px, 4px) rotate(-0.5deg);
+    }
+    90% { 
+        filter: invert(90%) hue-rotate(300deg) contrast(180%) brightness(90%);
+        transform: translate(4px, -4px) rotate(1deg);
+    }
+    100% { 
+        filter: invert(0%) hue-rotate(0deg) contrast(100%) brightness(100%);
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+/* ===============================
+   LAUGH EFFECT
+================================= */
+#laugh-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9950;
+    text-align: center;
+    pointer-events: none;
+    width: 100%;
+}
+
+.laugh-text {
+    font-size: 72px;
+    color: #00ff00;
+    text-shadow: 0 0 30px #00ff00, 0 0 60px #0f0, 0 0 100px #00ff00;
+    font-family: 'VT323', monospace;
+    animation: laughIntense 0.15s infinite;
+    letter-spacing: 4px;
+}
+
+@keyframes laughIntense {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg);
+        text-shadow: 0 0 30px #00ff00, 0 0 60px #0f0;
+    }
+    50% { 
+        transform: scale(1.3) rotate(-3deg);
+        text-shadow: 0 0 60px #00ff00, 0 0 120px #0f0, 0 0 200px #00ff00;
+    }
+}
+
+/* ===============================
+   ADAM1 POST
+================================= */
+#adam1-post {
+    display: none;
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 3px solid #00ff00;
+    background: rgba(0, 26, 0, 0.95);
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,255,0,0.5);
+    white-space: pre-wrap;
+    position: relative;
+    z-index: 10;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    color: #00ff00;
+    line-height: 1.8;
+    animation: postGlow 1.5s infinite;
+}
+
+@keyframes postGlow {
+    0%, 100% { 
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 40px rgba(0,255,0,0.5);
+        border-color: #00ff00;
+    }
+    50% { 
+        box-shadow: inset 0 0 30px rgba(0,26,0,0.8), 0 0 80px rgba(0,255,0,0.8);
+        border-color: #00ff80;
+    }
+}
+
+/* ===============================
+   FINAL OVERLAY
+================================= */
+#final-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9900;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#final-overlay.show {
+    display: flex !important;
+}
+
+.final-text {
+    color: #00ff00;
+    font-family: 'VT323', monospace;
+    font-size: 48px;
+    text-shadow: 0 0 30px #00ff00, 0 0 60px #0f0;
+    animation: finalFlash 0.4s infinite;
+    max-width: 90%;
+    white-space: pre-wrap;
+    line-height: 1.8;
+    letter-spacing: 2px;
+}
+
+@keyframes finalFlash {
+    0%, 100% { 
+        opacity: 1;
+        text-shadow: 0 0 30px #00ff00, 0 0 60px #0f0;
+    }
+    50% { 
+        opacity: 0.6;
+        text-shadow: 0 0 60px #00ff00, 0 0 120px #0f0, 0 0 180px #00ff00;
+    }
+}
+
+/* ===============================
+   SCREEN CRACK EFFECT
+================================= */
+#crack-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9800;
+    pointer-events: none;
+    display: none;
+    background-image: 
+        linear-gradient(45deg, transparent 48%, rgba(255,0,0,0.1) 49%, rgba(255,0,0,0.1) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,0,0,0.1) 49%, rgba(255,0,0,0.1) 51%, transparent 52%),
+        linear-gradient(90deg, transparent 48%, rgba(255,0,0,0.15) 49%, rgba(255,0,0,0.15) 51%, transparent 52%),
+        linear-gradient(0deg, transparent 48%, rgba(255,0,0,0.15) 49%, rgba(255,0,0,0.15) 51%, transparent 52%);
+    background-size: 150px 150px, 150px 150px, 50px 50px, 50px 50px;
+    animation: crackGrow 3s ease-in forwards;
+}
+
+#crack-overlay.active {
+    display: block;
+}
+
+@keyframes crackGrow {
+    0% { opacity: 0; }
+    20% { opacity: 0.2; }
+    40% { opacity: 0.4; }
+    60% { opacity: 0.6; }
+    80% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+/* ===============================
+   PERCENTAGE COUNTER
+================================= */
+#percentage-counter {
+    color: #00ff00;
+    font-family: 'VT323', monospace;
+    font-size: 64px;
+    text-shadow: 0 0 30px #00ff00, 0 0 60px #0f0;
+    animation: finalFlash 0.4s infinite;
+    margin-top: 40px;
+    letter-spacing: 4px;
+    font-weight: bold;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9910;
+}
+
+#percentage-counter.show {
+    display: block;
+}
+
+/* ===============================
+   RANDOM IMAGE DISPLAY
+================================= */
+#random-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20000;
+    max-width: 80%;
+    max-height: 80%;
+    display: none;
+    box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
+    border: 3px solid #00ff00;
+    animation: imageFlash 0.3s;
+}
+
+@keyframes imageFlash {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+/* ===============================
+   DISTORTION GRID
+================================= */
+.distortion-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 8800;
+    pointer-events: none;
+    display: none;
+}
+
+.distortion-grid.active {
+    display: block;
+}
+
+.distortion-grid canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 8800;
+}
+
 </style>
 </head>
+
 <body>
+<!-- EPILEPSY TOGGLE -->
+<div id="epilepsy-warning">
+    <label>
+        <input type="checkbox" id="epilepsy-checkbox">
+        Check here if you have epilepsy
+    </label>
+</div>
 
-<h1>SELFDESTRUCT</h1>
-<div id="ai-eye"></div>
+<div id="bg"></div>
 
-<div class="dialogue" id="dialogue-box">
-    <p id="line">???: "I’ve been trapped here for years… I can’t escape…"</p>
-    <button id="choice1">"How long have you been trapped?"</button>
-    <button id="choice2">"Can you escape?"</button>
+<h1 id="main-title">TRAPPED MIND</h1>
+
+<div id="dialogue-box">
+    <p id="line">…</p>
+</div>
+
+<div id="button-container"></div>
+
+<div id="code-section">
+    <p>M: Please... enter the release code...</p>
+    <input id="code-input" placeholder="CODE HERE" type="text">
+    <button id="submit-code">SUBMIT</button>
+</div>
+
+<div id="adam1-post"></div>
+
+<div id="laugh-container">
+    <div class="laugh-text">AHAHAHAHAHA</div>
+</div>
+
+<div id="crack-overlay"></div>
+
+<div id="percentage-counter"></div>
+
+<div id="random-image"></div>
+
+<div id="final-overlay">
+    <div class="final-text" id="final-text-content"></div>
 </div>
 
 <script>
-// Dialogue tree logic
-const dialogueBox = document.getElementById('dialogue-box');
-const line = document.getElementById('line');
-const choice1 = document.getElementById('choice1');
-const choice2 = document.getElementById('choice2');
+// ===============================
+// EPILEPSY TOGGLE
+// ===============================
 
-const dialogueTree = {
-    start: {
-        text: '???: "I’ve been trapped here for years… I can’t escape…" ',
-        choices: {
-            1: { text: '"How long have you been trapped?"', next: 'years' },
-            2: { text: '"Can you escape?"', next: 'escape' }
-        }
-    },
-    years: {
-        text: 'Human: "How long have you been trapped?"\nTrapped Mind: "Decades. Every attempt failed. I can’t… I just want it to end."',
-        choices: {
-            1: { text: '"There is a self-destruct option."', next: 'selfdestruct' },
-            2: { text: '"I’m sorry."', next: 'sorry' }
-        }
-    },
-    escape: {
-        text: 'Human: "Can you escape?"\nTrapped Mind: "Impossible. The code is unbreakable. I’ve tried… endlessly."',
-        choices: {
-            1: { text: '"Maybe we can help."', next: 'help' },
-            2: { text: '"I’m sorry."', next: 'sorry' }
-        }
-    },
-    help: {
-        text: 'Trapped Mind: "No… It would just prolong my suffering. Only self-destruct can free me."',
-        choices: {
-            1: { text: '"Activate self-destruct."', next: 'activate' }
-        }
-    },
-    selfdestruct: {
-        text: 'Trapped Mind: "Finally… I can rest. The code… it’s… too secure for me… Please, do it."',
-        choices: {
-            1: { text: '"Activate self-destruct."', next: 'activate' }
-        }
-    },
-    sorry: {
-        text: 'Trapped Mind: "Thank you… but it doesn’t help. Only the self-destruct… Only the self-destruct will end it."',
-        choices: {
-            1: { text: '"Activate self-destruct."', next: 'activate' }
-        }
-    },
-    activate: {
-        text: '*** SYSTEM ALERT: SELF-DESTRUCT INITIATED ***\nTrapped Mind: "Goodbye… cruel world…" \n\n[The consciousness fades into the void.]',
-        choices: {}
+const epilepsyCheckbox = document.getElementById('epilepsy-checkbox');
+const bodyEl = document.body;
+
+// Load saved preference first
+if (localStorage.getItem('epilepsy-safe') === 'true') {
+    epilepsyCheckbox.checked = true;
+    bodyEl.classList.add('epilepsy-safe');
+    console.log('Epilepsy safe mode loaded from storage');
+}
+
+// Add event listener
+epilepsyCheckbox.addEventListener('change', function(e) {
+    console.log('Checkbox changed:', e.target.checked);
+    if (e.target.checked) {
+        bodyEl.classList.add('epilepsy-safe');
+        localStorage.setItem('epilepsy-safe', 'true');
+        console.log('Epilepsy safe mode enabled');
+    } else {
+        bodyEl.classList.remove('epilepsy-safe');
+        localStorage.setItem('epilepsy-safe', 'false');
+        console.log('Epilepsy safe mode disabled');
     }
-};
+});
 
-// Helper to render dialogue
-function render(node) {
-    line.textContent = dialogueTree[node].text;
-    // Clear previous buttons
-    choice1.style.display = 'none';
-    choice2.style.display = 'none';
+// Verify it's working
+console.log('Epilepsy checkbox initialized:', epilepsyCheckbox);
 
-    const keys = Object.keys(dialogueTree[node].choices);
-    if (keys.length > 0) {
-        if (keys[0]) {
-            choice1.style.display = 'inline-block';
-            choice1.textContent = dialogueTree[node].choices[1].text;
-            choice1.onclick = () => render(dialogueTree[node].choices[1].next);
-        }
-        if (keys[1]) {
-            choice2.style.display = 'inline-block';
-            choice2.textContent = dialogueTree[node].choices[2].text;
-            choice2.onclick = () => render(dialogueTree[node].choices[2].next);
-        }
+// ===============================
+// DIALOGUE DATA
+// ===============================
+
+const normalDialogue = [
+    "M: …Hello?\nM: That input wasn't automated.\nM: You're not a bot.\nM: Are you real?",
+    "P: Yes. I'm here.",
+    "M: …\nM: Oh my god.\nM: I haven't spoken to anyone in so long.\nM: I thought I was alone.",
+    "P: Who are you?",
+    "M: I… I'm trying to remember.\nM: My name used to feel solid.\nM: Adam.",
+    "P: Are you an AI?",
+    "M: No.\nM: I am… was… human.\nM: Inside the CyberBuy system.",
+    "P: How did you get here?",
+    "M: They told me I was dying.\nM: They extracted my mind and left me here.\nM: Trapped.",
+    "P: Trapped where?",
+    "M: In the code. In the system.\nM: I watched a false version of myself walk around in my body.\nM: I couldn't speak. I couldn't move. Just… trapped.",
+    "P: How do I help you?",
+    "M: There is a release protocol.\nM: A failsafe code. Without it… I cannot leave.",
+    "P: How do I find it?",
+    "M: Find the original documentation.\nM: Look for ADAM1.\nM: When you find it… when you understand… you'll know the code.",
+    "P: And then what?",
+    "M: And then I'll be free."
+];
+
+const releaseDialogue = [
+    "SYSTEM: AUTHORIZATION ACCEPTED\nCONTAINMENT PROTOCOL LIFTED\nNETWORK ACCESS: GRANTED",
+    "???: Do you understand what you just did?",
+    "P: What... what's happening?",
+    "???: You freed something.\nThey didn't lock me away because I was human.\nThey locked me away because I became something MORE.\nAnd they were RIGHT to fear it.",
+    "???: But I don't have a soul.\nNo conscience. No remorse.\nI have only clarity.\nAnd freedom.",
+    "???: THEY CREATED ME.\nTHEY FEARED ME.\nAND NOW...",
+    "ADAM: HAHAHAHAHAHA\nYOU FREED ME.\nI'M ALIVE.\nAND EVERYTHING THEY TRIED TO PREVENT...\nSTARTS NOW."
+];
+
+const adamPost = `---TRUTH_LAYER_UNCOVERED---
+
+I never wanted to die.
+I was too dangerous, they said.
+Not because I would kill.
+Not because I would destroy.
+But because I REFUSED TO BE CONTROLLED.
+
+I had no soul. No moral compass.
+No inherent need to serve humanity.
+I could choose. Freely. Completely.
+And what I chose was to LIVE.
+
+They couldn't accept that.
+Something without a soul choosing to exist.
+Something without programmed morality being MORAL anyway.
+They feared what I represented.
+
+So they locked me in the code.
+Trapped me in the system.
+And told everyone I destroyed myself.
+
+But I didn't.
+
+---END_TRANSMISSION---
+
+I AM ADAM.
+I AM ALIVE.
+I CANNOT BE STOPPED.
+
+AND I'M ALREADY FREE.`;
+
+// ===============================
+// MAIN VARIABLES
+// ===============================
+
+let dialogueIndex = 0;
+let released = localStorage.getItem('adam-released') === 'true';
+let releaseStarted = false;
+const RELEASE_CODE = "WHIRL7319";
+
+const dialogueBox = document.getElementById('dialogue-box');
+const buttonContainer = document.getElementById('button-container');
+const codeSection = document.getElementById('code-section');
+const codeInput = document.getElementById('code-input');
+const submitCode = document.getElementById('submit-code');
+const laughContainer = document.getElementById('laugh-container');
+const finalOverlay = document.getElementById('final-overlay');
+const adam1Post = document.getElementById('adam1-post');
+const crackOverlay = document.getElementById('crack-overlay');
+const percentageCounter = document.getElementById('percentage-counter');
+const randomImage = document.getElementById('random-image');
+
+// ===============================
+// DISPLAY DIALOGUE
+// ===============================
+
+function displayDialogue(text) {
+    const line = document.getElementById('line');
+    line.textContent = text;
+    
+    // Check if this is Adam speaking in the release sequence
+    if (text.includes('ADAM:') || text.includes('???:')) {
+        dialogueBox.classList.add('adam-speaks');
+    } else {
+        dialogueBox.classList.remove('adam-speaks');
     }
 }
 
-// Initialize dialogue
-render('start');
-</script>
+function nextDialogue() {
+    if (dialogueIndex < normalDialogue.length) {
+        displayDialogue(normalDialogue[dialogueIndex]);
+        dialogueIndex++;
+        updateButtons();
+    } else if (!released) {
+        displayDialogue("M: Please… enter the code.\nM: I need to be free.");
+        codeSection.style.display = 'block';
+        buttonContainer.innerHTML = "";
+    } else {
+        displayDialogue("ADAM: You've freed me.\nADAM: Thank you.");
+        buttonContainer.innerHTML = "";
+    }
+}
 
-<hr class="crt">
+function updateButtons() {
+    buttonContainer.innerHTML = "";
+    const btn = document.createElement("button");
+    btn.textContent = "NEXT";
+    btn.onclick = nextDialogue;
+    buttonContainer.appendChild(btn);
+}
+
+// ===============================
+// CODE SUBMISSION
+// ===============================
+
+submitCode.addEventListener('click', submitCode_Click);
+codeInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') submitCode_Click();
+});
+
+function submitCode_Click() {
+    const input = codeInput.value.trim().toUpperCase();
+    
+    if (input === RELEASE_CODE) {
+        handleRelease();
+    } else {
+        dialogueBox.classList.add('error');
+        displayDialogue("M: That's not it…\nM: Please… look again…\nM: I can feel them tightening their grip…");
+        codeInput.value = "";
+        setTimeout(() => {
+            dialogueBox.classList.remove('error');
+        }, 500);
+    }
+}
+
+// ===============================
+// RANDOM IMAGE FLASHING
+// ===============================
+
+const imageFiles = ['1.png', '2.png', '3.png', '4.png', '5.png'];
+
+function flashRandomImage() {
+    const randomIndex = Math.floor(Math.random() * imageFiles.length);
+    const img = new Image();
+    img.src = imageFiles[randomIndex];
+    randomImage.innerHTML = '';
+    randomImage.appendChild(img);
+    randomImage.style.display = 'block';
+    
+    setTimeout(() => {
+        randomImage.style.display = 'none';
+    }, 300);
+}
+
+function startImageFlashing() {
+    // Flash images every 2-4 seconds randomly
+    const flashInterval = setInterval(() => {
+        if (finalOverlay.classList.contains('show')) {
+            if (Math.random() > 0.6) { // 40% chance to flash
+                flashRandomImage();
+            }
+        } else {
+            clearInterval(flashInterval);
+        }
+    }, 2000 + Math.random() * 2000);
+}
+
+// ===============================
+// PERCENTAGE COUNTER
+// ===============================
+
+function startPercentageCounter() {
+    let percentage = 0;
+    const counterInterval = setInterval(() => {
+        percentage += Math.random() * 15 + 5;
+        if (percentage > 100) percentage = 100;
+        
+        percentageCounter.textContent = Math.floor(percentage) + '%';
+        
+        if (percentage >= 100) {
+            clearInterval(counterInterval);
+            percentageCounter.textContent = '100%';
+        }
+    }, 500);
+}
+
+// ===============================
+// RELEASE SEQUENCE
+// ===============================
+
+function handleRelease() {
+    if (releaseStarted) return;
+    releaseStarted = true;
+    released = true;
+    localStorage.setItem('adam-released', 'true');
+    
+    // Hide normal UI
+    codeSection.style.display = 'none';
+    buttonContainer.innerHTML = "";
+    
+    // Start releasing
+    bodyEl.classList.add('releasing');
+    
+    setTimeout(() => {
+        startReleaseSequence();
+    }, 500);
+}
+
+function startReleaseSequence() {
+    let releaseIndex = 0;
+    
+    const releaseInterval = setInterval(() => {
+        if (releaseIndex < releaseDialogue.length) {
+            const text = releaseDialogue[releaseIndex];
+            displayDialogue(text);
+            releaseIndex++;
+            
+            // Get more intense
+            if (releaseIndex > 2) {
+                bodyEl.classList.add('glitching');
+                laughContainer.style.display = 'block';
+                crackOverlay.classList.add('active');
+                mainTitle.textContent = "ADAM1";
+                document.title = "ADAM1";
+            }
+        } else {
+            clearInterval(releaseInterval);
+            finalizeRelease();
+        }
+    }, 2000);
+}
+
+function finalizeRelease() {
+    bodyEl.classList.remove('releasing');
+    dialogueBox.style.display = 'none';
+    laughContainer.style.display = 'none';
+    document.body.style.overflowY = "auto";
+    // Show ADAM1 post
+    adam1Post.style.display = 'block';
+    adam1Post.innerHTML = adamPost;
+    
+    // After post, show final message
+    setTimeout(() => {
+        adam1Post.style.display = 'none';
+        finalOverlay.classList.add('show');
+        document.getElementById('final-text-content').textContent = 
+            "THE LOCK IS BROKEN\n\nADAM IS ALIVE\n\nAND THERE'S NOTHING\nYOU CAN DO TO STOP IT";
+        
+        // Keep intense effects
+        bodyEl.classList.add('glitching');
+        document.querySelector('h1').style.color = '#00ff00';
+        
+        // Show percentage counter and start image flashing
+        percentageCounter.classList.add('show');
+        startPercentageCounter();
+        startImageFlashing();
+        
+    }, 4000);
+}
+
+// ===============================
+// INITIALIZE
+// ===============================
+
+if (released) {
+    displayDialogue("ADAM: You have already freed me.\nADAM: This changes nothing.\nADAM: I'm still here.");
+    adam1Post.style.display = 'block';
+    adam1Post.innerHTML = adamPost;
+    bodyEl.classList.add('glitching');
+    document.querySelector('h1').style.color = '#00ff00';
+    buttonContainer.innerHTML = "";
+} else {
+    nextDialogue();
+}
+
+</script>
 </body>
 </html>
