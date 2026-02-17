@@ -185,12 +185,17 @@ player.addEventListener("ended", () => {
 });
 
 // Optional: allow auto-play after user interacts with page
-document.getElementById("mainContent").addEventListener("click", () => {
+document.getElementById("mainContent").addEventListener("click", function startPlay() {
   if (player.paused) player.play();
+  this.removeEventListener("click", startPlay); // remove listener after first click
+});
+
+  
 });
 
 function openHome() {
   window.open("home.html", "_blank");
+  
 }
 
 </script>
