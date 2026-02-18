@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Monitor 01</title>
+    <style>
+        body {
+            background: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        .camera-container {
+            position: relative;
+            width: 95%;
+            max-width: 1200px;
+            border: 2px solid #222;
+            background: #000;
+            overflow: hidden;
+        }
+
+        /* The Main Feed */
+        #cam-feed {
+            width: 100%;
+            display: block;
+            /* Subtle contrast boost without washing out the image */
+            filter: brightness(1.05) contrast(1.1);
+            transition: opacity 0.1s ease;
+        }
+
+        /* Subtle Vignette (Dark edges) */
+        .vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.6);
+            pointer-events: none;
+        }
+
+        /* Very Subtle Scanlines (Opacity turned way down) */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 3px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        /* UI Overlays */
+        .ui-text {
+            position: absolute;
+            padding: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+            z-index: 5;
+        }
+
+        .rec-indicator { top: 10px; left: 20px; color: #ff0000; }
+        .dot {
+            height: 10px;
+            width: 10px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: blink 1.2s infinite;
+        }
+
+        .timestamp { top: 10px; right: 20px; font-family: monospace; }
+        .cam-label { bottom: 10px; left: 20px; font-size: 12px; opacity: 0.7; }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* Controls */
+        .controls {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        button {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: white;
+        }
+
+        /* Random Flicker Animation */
+        .flicker {
+            animation: flicker-action 5s infinite;
+        }
+        @keyframes flicker-action {
+            0%, 95%, 100% { opacity: 1; }
+            96% { opacity: 0.96; }
+            97% { opacity: 0.99; }
+            98% { opacity: 0.94; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="camera-container flicker">
+    <div class="ui-text rec-indicator"><span class="dot"></span>LIVE</div>
+    <div class="ui-text timestamp" id="clock">00:00:00</div>
+    <div class="ui-text cam-label">INTERNAL_OFFICE_01 // HIGH_RES</div>
+
+    <img id="cam-feed" src="office.png" alt="Office Feed">
+
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+
+    <div class="controls">
+        <button onclick="toggleZoom()" id="zoom-btn">ZOOM_IN</button>
+    </div>
+</div>
+
+<script>
+    let isZoomed = false;
+    const feed = document.getElementById('cam-feed');
+    const btn = document.getElementById('zoom-btn');
+
+    function toggleZoom() {
+        if (!isZoomed) {
+            feed.src = 'officezoomer.png';
+            btn.innerText = 'ZOOM_OUT';
+        } else {
+            feed.src = 'office.png';
+            btn.innerText = 'ZOOM_IN';
+        }
+        isZoomed = !isZoomed;
+    }
+
+    // Live Clock Logic
+    function updateClock() {
+        const now = new Date();
+        const timeStr = now.getHours().toString().padStart(2, '0') + ":" + 
+                        now.getMinutes().toString().padStart(2, '0') + ":" + 
+                        now.getSeconds().toString().padStart(2, '0');
+        document.getElementById('clock').innerText = timeStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+</script>
+
+</body>
+</html>
