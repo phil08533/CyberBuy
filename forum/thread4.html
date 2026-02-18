@@ -1,5 +1,37 @@
 <!DOCTYPE html>
 <html>
+
+<script>  
+  function flashHelpMe() {
+    const el = document.createElement('div');
+    el.textContent = 'help me';
+    el.style.cssText = `
+        position: fixed;
+        top: ${20 + Math.random() * 60}%;
+        left: ${10 + Math.random() * 60}%;
+        color: #ff2a2a;
+        font-family: VT323, monospace;
+        font-size: 18px;
+        opacity: 0.5;
+        z-index: 9999;
+        pointer-events: none;
+        letter-spacing: 2px;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 200);
+}
+
+// Flash every 8-20 seconds randomly
+function scheduleHelpMe() {
+    setTimeout(() => {
+        flashHelpMe();
+        scheduleHelpMe();
+    },  4000 + Math.random() * 800);
+}
+
+scheduleHelpMe();
+
+</script>
 <head>
   <meta charset="UTF-8">
   <title>Corporate Nightmare Thread</title>

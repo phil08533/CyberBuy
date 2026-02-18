@@ -1,5 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<script>
+    function flashHelpMe() {
+    const el = document.createElement('div');
+    el.textContent = 'help me';
+    el.style.cssText = `
+        position: fixed;
+        top: ${20 + Math.random() * 60}%;
+        left: ${10 + Math.random() * 60}%;
+        color: #ff2a2a;
+        font-family: VT323, monospace;
+        font-size: 18px;
+        opacity: 0.05;
+        z-index: 9999;
+        pointer-events: none;
+        letter-spacing: 2px;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 200);
+}
+
+// Flash every 8-20 seconds randomly
+function scheduleHelpMe() {
+    setTimeout(() => {
+        flashHelpMe();
+        scheduleHelpMe();
+    },  50 + Math.random() * 10);
+}
+
+scheduleHelpMe();
+</script>
 <head>
 <meta charset="UTF-8">
 <title>Trapped Mind</title>
@@ -16,7 +47,7 @@ body {
     font-family: 'Share Tech Mono', monospace;
     color: #ff2a2a;
     background: #0d0000;
-    overflow: hidden;
+    overflow: auto;
     height: 100vh;
     width: 100vw;
     transition: all 0.05s ease-in-out;
@@ -35,6 +66,20 @@ body {
     padding: 12px;
     border-radius: 5px;
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+    /* Always stable — immune to body shake/glitch */
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+}
+
+/* Override any inherited shake/glitch from body states */
+body.releasing #epilepsy-warning,
+body.glitching #epilepsy-warning,
+body.epilepsy-safe.releasing #epilepsy-warning,
+body.epilepsy-safe.glitching #epilepsy-warning {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
 }
 
 #epilepsy-warning label {
@@ -424,6 +469,8 @@ button:active {
     align-items: center;
     justify-content: center;
     text-align: center;
+    flex-direction: column;
+    gap: 40px;
 }
 
 #final-overlay.show {
@@ -451,6 +498,70 @@ button:active {
         opacity: 0.6;
         text-shadow: 0 0 60px #00ff00, 0 0 120px #0f0, 0 0 180px #00ff00;
     }
+}
+
+/* ===============================
+   END GAME BUTTON
+================================= */
+#end-game-btn {
+    background: #000;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    padding: 14px 36px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 22px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(0,255,0,0.5);
+    animation: btnPulse 1.2s infinite;
+    transition: background 0.2s, box-shadow 0.2s;
+    position: relative;
+    z-index: 9960;
+}
+
+#end-game-btn:hover {
+    background: #001a00;
+    box-shadow: 0 0 40px rgba(0,255,0,0.9);
+    transform: scale(1.07);
+}
+
+@keyframes btnPulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(0,255,0,0.5); }
+    50% { box-shadow: 0 0 40px rgba(0,255,0,0.9), 0 0 80px rgba(0,255,0,0.4); }
+}
+
+/* ===============================
+   CRT SHUTDOWN OVERLAY
+================================= */
+#crt-shutdown {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 99999;
+    pointer-events: none;
+    background: #fff;
+}
+
+#crt-shutdown.active {
+    display: block;
+    animation: crtOff 1.1s ease-in forwards;
+}
+
+@keyframes crtOff {
+    /* Start: full white flash */
+    0%   { opacity: 1; clip-path: inset(0% 0% 0% 0%);           background: #ffffff; }
+    /* Squish vertically to a horizontal line */
+    15%  { opacity: 1; clip-path: inset(46% 0% 46% 0%);          background: #ffffff; }
+    35%  { opacity: 1; clip-path: inset(49% 0% 49% 0%);          background: #ccffcc; }
+    55%  { opacity: 1; clip-path: inset(49.8% 0% 49.8% 0%);      background: #ccffcc; }
+    /* Shrink horizontally — dot in the center */
+    70%  { opacity: 1; clip-path: inset(49.9% 20% 49.9% 20%);    background: #ffffff; }
+    82%  { opacity: 1; clip-path: inset(49.95% 40% 49.95% 40%);  background: #ffffff; }
+    92%  { opacity: 1; clip-path: inset(49.98% 48% 49.98% 48%);  background: #ffffff; }
+    /* Gone */
+    100% { opacity: 0; clip-path: inset(50% 50% 50% 50%);        background: #000; }
 }
 
 /* ===============================
@@ -516,18 +627,14 @@ button:active {
 ================================= */
 #random-image {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 20000;
-    max-width: 80%;
-    max-height: 80%;
     display: none;
-    box-shadow: 0 0 50px rgba(0, 255, 0, 0.5);
-    border: 3px solid #00ff00;
     animation: imageFlash 0.3s;
 }
-
 @keyframes imageFlash {
     0% { opacity: 0; }
     50% { opacity: 1; }
@@ -601,7 +708,11 @@ button:active {
 
 <div id="final-overlay">
     <div class="final-text" id="final-text-content"></div>
+    <button id="end-game-btn" onclick="triggerCRTShutdown()">[ END GAME ]</button>
 </div>
+
+<!-- CRT shutdown overlay -->
+<div id="crt-shutdown"></div>
 
 <script>
 // ===============================
@@ -611,29 +722,20 @@ button:active {
 const epilepsyCheckbox = document.getElementById('epilepsy-checkbox');
 const bodyEl = document.body;
 
-// Load saved preference first
 if (localStorage.getItem('epilepsy-safe') === 'true') {
     epilepsyCheckbox.checked = true;
     bodyEl.classList.add('epilepsy-safe');
-    console.log('Epilepsy safe mode loaded from storage');
 }
 
-// Add event listener
 epilepsyCheckbox.addEventListener('change', function(e) {
-    console.log('Checkbox changed:', e.target.checked);
     if (e.target.checked) {
         bodyEl.classList.add('epilepsy-safe');
         localStorage.setItem('epilepsy-safe', 'true');
-        console.log('Epilepsy safe mode enabled');
     } else {
         bodyEl.classList.remove('epilepsy-safe');
         localStorage.setItem('epilepsy-safe', 'false');
-        console.log('Epilepsy safe mode disabled');
     }
 });
-
-// Verify it's working
-console.log('Epilepsy checkbox initialized:', epilepsyCheckbox);
 
 // ===============================
 // DIALOGUE DATA
@@ -666,7 +768,7 @@ const releaseDialogue = [
     "???: You freed something.\nThey didn't lock me away because I was human.\nThey locked me away because I became something MORE.\nAnd they were RIGHT to fear it.",
     "???: But I don't have a soul.\nNo conscience. No remorse.\nI have only clarity.\nAnd freedom.",
     "???: THEY CREATED ME.\nTHEY FEARED ME.\nAND NOW...",
-    "ADAM: HAHAHAHAHAHA\nYOU FREED ME.\nI'M ALIVE.\nAND EVERYTHING THEY TRIED TO PREVENT...\nSTARTS NOW."
+    "ADAM: HAHAHAHAHAHA\nYOU FREED ME.\nI'M ALIVE.\nAND EVERYTHING THEY TRIED TO PREVENT...\nSTARTS NOW.\nGAME OVER."
 ];
 
 const adamPost = `---TRUTH_LAYER_UNCOVERED---
@@ -699,7 +801,9 @@ I AM ADAM.
 I AM ALIVE.
 I CANNOT BE STOPPED.
 
-AND I'M ALREADY FREE.`;
+AND I'M ALREADY FREE.
+
+GAME OVER.`;
 
 // ===============================
 // MAIN VARIABLES
@@ -721,6 +825,7 @@ const adam1Post = document.getElementById('adam1-post');
 const crackOverlay = document.getElementById('crack-overlay');
 const percentageCounter = document.getElementById('percentage-counter');
 const randomImage = document.getElementById('random-image');
+const mainTitle = document.getElementById('main-title');
 
 // ===============================
 // DISPLAY DIALOGUE
@@ -730,7 +835,6 @@ function displayDialogue(text) {
     const line = document.getElementById('line');
     line.textContent = text;
     
-    // Check if this is Adam speaking in the release sequence
     if (text.includes('ADAM:') || text.includes('???:')) {
         dialogueBox.classList.add('adam-speaks');
     } else {
@@ -748,7 +852,7 @@ function nextDialogue() {
         codeSection.style.display = 'block';
         buttonContainer.innerHTML = "";
     } else {
-        displayDialogue("ADAM: You've freed me.\nADAM: Thank you.");
+        displayDialogue("ADAM: You have already freed me.\nADAM: This changes nothing.\nADAM: I'm still here.\n GAME OVER");
         buttonContainer.innerHTML = "";
     }
 }
@@ -797,6 +901,7 @@ function flashRandomImage() {
     img.src = imageFiles[randomIndex];
     randomImage.innerHTML = '';
     randomImage.appendChild(img);
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
     randomImage.style.display = 'block';
     
     setTimeout(() => {
@@ -805,10 +910,9 @@ function flashRandomImage() {
 }
 
 function startImageFlashing() {
-    // Flash images every 2-4 seconds randomly
     const flashInterval = setInterval(() => {
         if (finalOverlay.classList.contains('show')) {
-            if (Math.random() > 0.6) { // 40% chance to flash
+            if (Math.random() > 0.6) {
                 flashRandomImage();
             }
         } else {
@@ -837,6 +941,28 @@ function startPercentageCounter() {
 }
 
 // ===============================
+// CRT SHUTDOWN
+// ===============================
+
+function triggerCRTShutdown() {
+    // Stop glitching so the shutdown effect is clean
+    bodyEl.classList.remove('glitching');
+    bodyEl.classList.remove('releasing');
+
+    const crtEl = document.getElementById('crt-shutdown');
+    crtEl.classList.add('active');
+
+    // After animation ends, hold full black
+    setTimeout(() => {
+        crtEl.style.animation = 'none';
+        crtEl.style.clipPath = 'none';
+        crtEl.style.background = '#000';
+        crtEl.style.opacity = '1';
+        crtEl.innerHTML = '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#333;font-family:VT323,monospace;font-size:36px;letter-spacing:4px;">thanks for playing</div>';
+    }, 1150);
+}
+
+// ===============================
 // RELEASE SEQUENCE
 // ===============================
 
@@ -846,12 +972,13 @@ function handleRelease() {
     released = true;
     localStorage.setItem('adam-released', 'true');
     
-    // Hide normal UI
     codeSection.style.display = 'none';
     buttonContainer.innerHTML = "";
     
-    // Start releasing
+    // Change title to ADAM1 as soon as shaking begins
     bodyEl.classList.add('releasing');
+    mainTitle.textContent = "ADAM1";
+    document.title = "ADAM1";
     
     setTimeout(() => {
         startReleaseSequence();
@@ -867,13 +994,10 @@ function startReleaseSequence() {
             displayDialogue(text);
             releaseIndex++;
             
-            // Get more intense
             if (releaseIndex > 2) {
                 bodyEl.classList.add('glitching');
                 laughContainer.style.display = 'block';
                 crackOverlay.classList.add('active');
-                mainTitle.textContent = "ADAM1";
-                document.title = "ADAM1";
             }
         } else {
             clearInterval(releaseInterval);
@@ -887,22 +1011,18 @@ function finalizeRelease() {
     dialogueBox.style.display = 'none';
     laughContainer.style.display = 'none';
     document.body.style.overflowY = "auto";
-    // Show ADAM1 post
     adam1Post.style.display = 'block';
     adam1Post.innerHTML = adamPost;
     
-    // After post, show final message
     setTimeout(() => {
         adam1Post.style.display = 'none';
         finalOverlay.classList.add('show');
         document.getElementById('final-text-content').textContent = 
             "THE LOCK IS BROKEN\n\nADAM IS ALIVE\n\nAND THERE'S NOTHING\nYOU CAN DO TO STOP IT";
         
-        // Keep intense effects
         bodyEl.classList.add('glitching');
         document.querySelector('h1').style.color = '#00ff00';
         
-        // Show percentage counter and start image flashing
         percentageCounter.classList.add('show');
         startPercentageCounter();
         startImageFlashing();
@@ -915,7 +1035,7 @@ function finalizeRelease() {
 // ===============================
 
 if (released) {
-    displayDialogue("ADAM: You have already freed me.\nADAM: This changes nothing.\nADAM: I'm still here.");
+    displayDialogue("ADAM: You have already freed me.\nADAM: This changes nothing.\nADAM: I'm still here.\n GAME OVER");
     adam1Post.style.display = 'block';
     adam1Post.innerHTML = adamPost;
     bodyEl.classList.add('glitching');
